@@ -10,6 +10,7 @@ use Doctrine\Common\Collections\Collection;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use ApiPlatform\Core\Serializer\Filter\PropertyFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\RangeFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 
 /**
@@ -18,7 +19,9 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
  *     "brand": "exact",
  *     "model": "exact",
  *     "gasoline": "exact"
- * })
+ * }
+ * )
+ * @ApiFilter(RangeFilter::class, properties={"mileage"})
  * @ORM\Entity(repositoryClass=AdRepository::class)
  */
 class Ad
@@ -70,10 +73,6 @@ class Ad
      */
     private $gasoline;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Mileage::class, inversedBy="ads")
-     */
-    private $mileage;
 
     /**
      * @ORM\ManyToOne(targetEntity=Garage::class, inversedBy="ad")
@@ -89,6 +88,11 @@ class Ad
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="Ad")
      */
     private $user;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $mileage;
 
     public function __construct()
     {
@@ -215,17 +219,6 @@ class Ad
         return $this;
     }
 
-    public function getMileage(): ?Mileage
-    {
-        return $this->mileage;
-    }
-
-    public function setMileage(?Mileage $mileage): self
-    {
-        $this->mileage = $mileage;
-
-        return $this;
-    }
 
     public function getGarage(): ?Garage
     {
@@ -259,6 +252,18 @@ class Ad
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getMileage(): ?int
+    {
+        return $this->mileage;
+    }
+
+    public function setMileage(?int $mileage): self
+    {
+        $this->mileage = $mileage;
 
         return $this;
     }
