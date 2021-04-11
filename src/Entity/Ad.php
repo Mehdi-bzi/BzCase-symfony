@@ -10,11 +10,13 @@ use Doctrine\Common\Collections\Collection;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use ApiPlatform\Core\Serializer\Filter\PropertyFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\RangeFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\NumericFilter;
 
 /**
- * @ApiResource(attributes={"pagination_enabled"=false})
+ * @ApiResource(attributes={"pagination_items_per_page"=10})
  * @ApiFilter(SearchFilter::class, properties={
  *     "brand": "exact",
  *     "model": "exact",
@@ -22,6 +24,12 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
  * }
  * )
  * @ApiFilter(RangeFilter::class, properties={"mileage"})
+ * 
+ * @ApiFilter(NumericFilter::class, properties={"price"})
+ * 
+ * @ApiFilter(DateFilter::class, properties={"dateCirculation"})
+ * 
+
  * @ORM\Entity(repositoryClass=AdRepository::class)
  */
 class Ad
