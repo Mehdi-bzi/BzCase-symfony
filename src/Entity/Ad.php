@@ -23,9 +23,8 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\NumericFilter;
  *     "gasoline": "exact"
  * }
  * )
- * @ApiFilter(RangeFilter::class, properties={"mileage"})
+ * @ApiFilter(RangeFilter::class, properties={"mileage", "price"})
  * 
- * @ApiFilter(NumericFilter::class, properties={"price"})
  * 
  * @ApiFilter(DateFilter::class, properties={"dateCirculation"})
  * 
