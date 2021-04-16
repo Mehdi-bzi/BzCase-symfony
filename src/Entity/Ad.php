@@ -9,6 +9,7 @@ use ApiPlatform\Core\Annotation\ApiFilter;
 use Doctrine\Common\Collections\Collection;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Serializer\Annotation\Groups;
 use ApiPlatform\Core\Serializer\Filter\PropertyFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\RangeFilter;
@@ -16,7 +17,10 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\NumericFilter;
 
 /**
- * @ApiResource(attributes={"pagination_items_per_page"=10})
+ * @ApiResource(
+ *     normalizationContext={"groups"={"ad:read"}},
+ *     )
+ * 
  * @ApiFilter(SearchFilter::class, properties={
  *     "brand": "exact",
  *     "model": "exact",
@@ -37,46 +41,55 @@ class Ad
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"ad:read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"ad:read"})
      */
     private $reference;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"ad:read"})
      */
     private $title;
 
     /**
      * @ORM\Column(type="string", length=500)
+     * @Groups({"ad:read"})
      */
     private $description;
 
     /**
      * @ORM\Column(type="date")
+     * @Groups({"ad:read"})
      */
     private $dateCirculation;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"ad:read"})
      */
     private $price;
 
     /**
      * @ORM\OneToMany(targetEntity=Photo::class, mappedBy="ad")
+     * @Groups({"ad:read"})
      */
     private $photo;
 
     /**
      * @ORM\ManyToOne(targetEntity=Brand::class, inversedBy="ads")
+     * @Groups({"ad:read"})
      */
     private $brand;
 
     /**
      * @ORM\ManyToOne(targetEntity=Gasoline::class, inversedBy="ads")
+     * @Groups({"ad:read"})
      */
     private $gasoline;
 
@@ -88,6 +101,7 @@ class Ad
 
     /**
      * @ORM\ManyToOne(targetEntity=Model::class, inversedBy="ads")
+     * @Groups({"ad:read"})
      */
     private $model;
 
@@ -98,6 +112,7 @@ class Ad
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Groups({"ad:read"})
      */
     private $mileage;
 
